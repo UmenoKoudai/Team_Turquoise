@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     [Tooltip("探索範囲")]
     float _sreachRange = 3;
+
+    [SerializeField]
+    [Tooltip("幽体が本体の場所に戻るのにかかる時間")]
+    float _astralToRealTime = 2;
 
     [Space]
     [Space]
@@ -59,6 +64,7 @@ public class PlayerController : MonoBehaviour
     IState _stateAstral;
     /// <summary>本体と幽体の距離が限界値であるかどうか</summary>
     bool _isBodyDistanceLimit;
+    bool _isToRealMoving = false;
 
     Vector2 _savePos;
     void Start()
@@ -77,53 +83,56 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _moveDirX = Input.GetAxisRaw("Horizontal");
-        _moveDirY = Input.GetAxisRaw("Vertical");
-        if ((_moveDirX != 0 || _moveDirY != 0) && (_moveDirX == 0 || _moveDirY == 0))
+        if(!_isToRealMoving)
         {
-            _searchLayDir = new Vector2(_moveDirX,_moveDirY);
-        }
-
-        //Playerの前方にActionを起こすものがあったら
-        IAction action = Search();
-        if (action != null)
-        {
-            if(Input.GetKeyDown(KeyCode.Z))
+            _moveDirX = Input.GetAxisRaw("Horizontal");
+            _moveDirY = Input.GetAxisRaw("Vertical");
+            if ((_moveDirX != 0 || _moveDirY != 0) && (_moveDirX == 0 || _moveDirY == 0))
             {
-                action.Action(GameInfo.Instance);
+                _searchLayDir = new Vector2(_moveDirX, _moveDirY);
             }
-        }
 
-        _currentState.OnUpdate();
+            //Playerの前方にActionを起こすものがあったら
+            IAction action = Search();
+            if (action != null)
+            {
+                if (Input.GetKeyDown(KeyCode.Return))
+                {
+                    action.Action(GameInfo.Instance);
+                }
+            }
 
-        //本体の時
-        if(_isReal)
-        {
-            _astralGO.transform.position = _realGO.transform.position;
-        }
-        //幽体の時
-        else
-        {
-            float distance = Vector2.Distance(_astralGO.transform.position, _realGO.transform.position);
-            if (!_isBodyDistanceLimit && distance > _distanceLimit)
-            {
-                _savePos = _astralGO.transform.position;
-                _isBodyDistanceLimit = true;
-            }
-            else if(_isBodyDistanceLimit && distance <= _distanceLimit)
-            {
-                _isBodyDistanceLimit = false;
-            }
-            
-            if(_isBodyDistanceLimit)
-            {
-                _astralGO.transform.position = _savePos; 
-            }
-        }
+            _currentState.OnUpdate();
 
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            RealAstralBodyChange();
+            //本体の時
+            if (_isReal)
+            {
+                _astralGO.transform.position = _realGO.transform.position;
+            }
+            //幽体の時
+            else
+            {
+                float distance = Vector2.Distance(_astralGO.transform.position, _realGO.transform.position);
+                if (!_isBodyDistanceLimit && distance > _distanceLimit)
+                {
+                    _savePos = _astralGO.transform.position;
+                    _isBodyDistanceLimit = true;
+                }
+                else if (_isBodyDistanceLimit && distance <= _distanceLimit)
+                {
+                    _isBodyDistanceLimit = false;
+                }
+
+                if (_isBodyDistanceLimit)
+                {
+                    _astralGO.transform.position = _savePos;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                RealAstralBodyChange();
+            }
         }
     }
 
@@ -137,10 +146,23 @@ public class PlayerController : MonoBehaviour
     {
         _currentState.OnExit();
         _isReal = !_isReal;
+        if(_isReal)
+        {
+            _isToRealMoving = true;
+            _astralGO.transform.DOMove(_realGO.transform.position, _astralToRealTime)
+                .OnComplete(() => 
+                {
+                    _isToRealMoving = false; 
+                    _playerVCM.Follow = _realGO.transform; 
+                });
+        }
+        else
+        {
+            _playerVCM.Follow = _astralGO.transform;
+        }
         _currentSearchLayer = _isReal ? _realPlayerSearchLayer : _astralPlayerSearchLayer;
         _searchLayOrigin = _isReal ? _realGO.transform : _astralGO.transform;
         _currentState = _isReal ? _stateReal : _stateAstral;
-        _playerVCM.Follow = _isReal ? _realGO.transform : _astralGO.transform;
         _currentState.OnEnter();
     }
 
