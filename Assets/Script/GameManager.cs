@@ -22,6 +22,11 @@ public class GameManager : MonoBehaviour
         Result,
     }
 
+    private void OnEnable()
+    {
+        GameInfo.Instance.GameManager = this;
+    }
+
     void Update()
     {
         if (_state != GameState.InGame) return;

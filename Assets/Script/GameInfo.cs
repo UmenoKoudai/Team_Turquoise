@@ -20,7 +20,7 @@ public class GameInfo : MonoBehaviour
     }
 
     //public Player Player;
-    //public GameManager GameManager;
+    public GameManager GameManager;
 
     public GameInfo Set()
     {
