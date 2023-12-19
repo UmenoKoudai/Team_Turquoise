@@ -5,9 +5,22 @@ using UnityEngine;
 /// <summary>Playerの全体の管理を行うクラス</summary>
 public class PlayerController : MonoBehaviour
 {
+    [Header("設定")]
+
     [SerializeField]
-    [Header("距離制限")]
+    [Header("本体と幽体の距離制限")]
     float _distanceLimit;
+
+    [SerializeField]
+    [Tooltip("本体が起こすActionのオブジェクトLayer")]
+    LayerMask _realPlayerSearchLayer;
+
+    [SerializeField]
+    [Tooltip("幽体が起こすActionのオブジェクトLayer")]
+    LayerMask _astralPlayerSearchLayer;
+
+    [Space]
+    [Space]
 
     [SerializeField]
     [Tooltip("本体のGameObject")]
@@ -17,16 +30,13 @@ public class PlayerController : MonoBehaviour
     [Tooltip("幽体のGameObject")]
     GameObject _astralGO;
 
-
-
-    [SerializeField]
-    [Tooltip("Playerが調べるもののLayer")]
-    LayerMask _searchLayer;
+    /// <summary>現在Actionを起こせるLayer</summary>
+    LayerMask _currentSearchLayer;
     /// <summary>移動方向Y</summary>
     float _moveDirY = 0;
     /// <summary>移動方向X</summary>
     float _moveDirX = 0;
-
+    /// <summary>探索に使うRayの向き</summary>
     Vector2 _searchLayDir = Vector2.zero;
     /// <summary>ものの感知用のLayの始点</summary>
     Transform _searchLayOrigin;
@@ -38,9 +48,10 @@ public class PlayerController : MonoBehaviour
     IState _stateReal;
     /// <summary>幽体のState</summary>
     IState _stateAstral;
+    /// <summary>本体と幽体の距離が限界値であるかどうか</summary>
+    bool _isBodyDistanceLimit;
 
-    Vector2 pos;
-    bool isLimit;
+    Vector2 _savePos;
     void Start()
     {
         _stateReal = _realGO.GetComponent<IState>();
@@ -61,7 +72,16 @@ public class PlayerController : MonoBehaviour
         {
             _searchLayDir = new Vector2(_moveDirX,_moveDirY);
         }
-        Search();
+
+        //Playerの前方にActionを起こすものがあったら
+        IAction action = Search();
+        if (action != null)
+        {
+            if(Input.GetKeyDown(KeyCode.Z))
+            {
+                action.Action(GameInfo.Instance);
+            }
+        }
 
         _currentState.OnUpdate();
 
@@ -74,19 +94,19 @@ public class PlayerController : MonoBehaviour
         else
         {
             float distance = Vector2.Distance(_astralGO.transform.position, _realGO.transform.position);
-            if (!isLimit && distance > _distanceLimit)
+            if (!_isBodyDistanceLimit && distance > _distanceLimit)
             {
-                pos = _astralGO.transform.position;
-                isLimit = true;
+                _savePos = _astralGO.transform.position;
+                _isBodyDistanceLimit = true;
             }
-            else if(isLimit && distance <= _distanceLimit)
+            else if(_isBodyDistanceLimit && distance <= _distanceLimit)
             {
-                isLimit = false;
+                _isBodyDistanceLimit = false;
             }
             
-            if(isLimit)
+            if(_isBodyDistanceLimit)
             {
-                _astralGO.transform.position = pos; 
+                _astralGO.transform.position = _savePos; 
             }
         }
 
@@ -106,19 +126,22 @@ public class PlayerController : MonoBehaviour
     {
         _currentState.OnExit();
         _isReal = !_isReal;
+        _currentSearchLayer = _isReal ? _realPlayerSearchLayer : _astralPlayerSearchLayer;
         _searchLayOrigin = _isReal ? _realGO.transform : _astralGO.transform;
         _currentState = _isReal ? _stateReal : _stateAstral;
         _currentState.OnEnter();
     }
 
-    public bool Search()
+    /// <summary>探索した時のActionを起こせるものを探す</summary>
+    /// <returns>起こすAction</returns>
+    public IAction Search()
     {
-        RaycastHit2D hit = Physics2D.Raycast(_searchLayOrigin.position, _searchLayDir, 1, _searchLayer);
+        RaycastHit2D hit = Physics2D.Raycast(_searchLayOrigin.position, _searchLayDir, 1, _currentSearchLayer);
         Debug.DrawRay(_searchLayOrigin.position, _searchLayDir, Color.black, 0.5f);
-        if (hit.collider == null)
+        if(hit.collider == null )
         {
-            return false;
+            return null;
         }
-        return true;
+        return hit.collider.gameObject.GetComponent<IAction>();
     }
 }
