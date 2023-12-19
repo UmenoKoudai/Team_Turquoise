@@ -9,6 +9,8 @@ public class PlayerAstralControlle : MonoBehaviour, IState
     [SerializeField]
     [Header("歩行速度")]
     float _moveSpeed;
+
+    BoxCollider2D _collider;
     Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
     Animator _anim = null;
@@ -21,11 +23,14 @@ public class PlayerAstralControlle : MonoBehaviour, IState
         _anim = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<BoxCollider2D>();
         _spriteRenderer.sortingOrder = 0;
+        _collider.enabled = false;
     }
     public void OnEnter()
     {
         _spriteRenderer.sortingOrder = 1;
+        _collider.enabled = true;
     }
     public void OnUpdate()
     {
@@ -42,6 +47,7 @@ public class PlayerAstralControlle : MonoBehaviour, IState
     public void OnExit()
     {
         _spriteRenderer.sortingOrder = 0;
+        _collider.enabled = false;
         _rb.velocity = Vector2.zero;
     }
 }
