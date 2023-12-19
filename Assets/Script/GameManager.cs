@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameState _state = GameState.Title;
 
-    private int _skillCount = 0;
+    //private int _skillCount = 0;
     public int SkillCount = 0;
 
     public enum GameState
@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (_state != GameState.InGame) return;
-        __skillCountText.text = _skillCount.ToString();
+        //_skillCountText.text = _skillCount.ToString();
     }
 
     public void StateChange(GameState state)

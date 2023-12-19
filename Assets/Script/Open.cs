@@ -6,11 +6,14 @@ public class Open : MonoBehaviour, IAction
 {
     [SerializeField]
     Animator _openAnimator;
-    [SerializeField] float _closingTime;
-    float _eTime;
+    [SerializeField]
+
+    //[SerializeField] float _closingTime;
+    //float _eTime;
     bool _isOpened = false;
     public void Action(GameInfo info)
     {
+        Debug.Log("ドアアクション");
         _openAnimator.SetBool("Open", true);
         _isOpened = (!_isOpened) ? true : _isOpened;
     }

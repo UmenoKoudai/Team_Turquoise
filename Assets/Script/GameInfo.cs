@@ -20,7 +20,11 @@ public class GameInfo : MonoBehaviour
     }
 
     //public Player Player;
-    public GameManager GameManager;
+    private GameManager _gameManager;
+    public GameManager GameManager
+    {
+        get => _gameManager; set => _gameManager = value;
+    }
 
     public GameInfo Set()
     {

@@ -59,7 +59,7 @@ public class StealthFunction : MonoBehaviour, IAction
             // èâä˙Ç…ñﬂÇ∑ 
             float color_alpha = 1.0f;
             _spriteRenderer.color = new Color(_color.r, _color.g, _color.b, color_alpha);
-            _target.layer = 0;
+            _target.layer = 6;
             _ui.SetActive(false);
         }
     }
