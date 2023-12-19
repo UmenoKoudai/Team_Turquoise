@@ -14,19 +14,19 @@ public class PlayerController : MonoBehaviour
     float _distanceLimit;
 
     [SerializeField]
-    [Tooltip("本体が起こすActionのオブジェクトLayer")]
+    [Header("本体が起こすActionのオブジェクトLayer")]
     LayerMask _realPlayerSearchLayer;
 
     [SerializeField]
-    [Tooltip("幽体が起こすActionのオブジェクトLayer")]
+    [Header("幽体が起こすActionのオブジェクトLayer")]
     LayerMask _astralPlayerSearchLayer;
 
     [SerializeField]
-    [Tooltip("探索範囲")]
+    [Header("探索範囲")]
     float _sreachRange = 3;
 
     [SerializeField]
-    [Tooltip("幽体が本体の場所に戻るのにかかる時間")]
+    [Header("幽体が本体の場所に戻るのにかかる時間")]
     float _astralToRealTime = 2;
 
     [Space]
