@@ -526,6 +526,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _sreachRange: 3
+  _astralToRealTime: 1.3
   _realGO: {fileID: 7786263337530077025}
   _astralGO: {fileID: 7786263338565820024}
   _playerVCM: {fileID: 804369144}
