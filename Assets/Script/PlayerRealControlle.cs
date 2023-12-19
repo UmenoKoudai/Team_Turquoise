@@ -11,6 +11,8 @@ public class PlayerRealControlle : MonoBehaviour, IState
     [SerializeField]
     [Header("ï‡çsë¨ìx")]
     float _moveSpeed;
+
+    BoxCollider2D _collider;
     Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
     Animator _anim = null;
@@ -27,11 +29,13 @@ public class PlayerRealControlle : MonoBehaviour, IState
         _anim = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<BoxCollider2D>();
     }
 
     public void OnEnter()
     {
         _spriteRenderer.sortingOrder = 1;
+        _collider.enabled = true;
     }
     public void OnUpdate()
     {
@@ -56,6 +60,7 @@ public class PlayerRealControlle : MonoBehaviour, IState
     public void OnExit()
     {
         _spriteRenderer.sortingOrder = 0;
+        _collider.enabled = false;
         _rb.velocity = Vector2.zero;
     }
     public void HadeAction()
