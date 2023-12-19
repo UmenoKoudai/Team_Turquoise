@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,10 @@ public class PlayerController : MonoBehaviour
     [Tooltip("幽体が起こすActionのオブジェクトLayer")]
     LayerMask _astralPlayerSearchLayer;
 
+    [SerializeField]
+    [Tooltip("探索範囲")]
+    float _sreachRange = 3;
+
     [Space]
     [Space]
 
@@ -29,6 +34,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     [Tooltip("幽体のGameObject")]
     GameObject _astralGO;
+
+    [SerializeField]
+    [Tooltip("仮想カメラ")]
+    CinemachineVirtualCamera _playerVCM;
 
     /// <summary>現在Actionを起こせるLayer</summary>
     LayerMask _currentSearchLayer;
@@ -58,6 +67,8 @@ public class PlayerController : MonoBehaviour
         _stateAstral = _astralGO.GetComponent<IState>();
         _stateReal.OnStart();
         _stateAstral.OnStart();
+        _currentSearchLayer = _realPlayerSearchLayer;
+        _playerVCM.Follow = _realGO.transform;
         _searchLayOrigin = _realGO.transform;
         _currentState = _stateReal;
         _isReal = true;
@@ -129,6 +140,7 @@ public class PlayerController : MonoBehaviour
         _currentSearchLayer = _isReal ? _realPlayerSearchLayer : _astralPlayerSearchLayer;
         _searchLayOrigin = _isReal ? _realGO.transform : _astralGO.transform;
         _currentState = _isReal ? _stateReal : _stateAstral;
+        _playerVCM.Follow = _isReal ? _realGO.transform : _astralGO.transform;
         _currentState.OnEnter();
     }
 
@@ -136,8 +148,8 @@ public class PlayerController : MonoBehaviour
     /// <returns>起こすAction</returns>
     public IAction Search()
     {
-        RaycastHit2D hit = Physics2D.Raycast(_searchLayOrigin.position, _searchLayDir, 1, _currentSearchLayer);
-        Debug.DrawRay(_searchLayOrigin.position, _searchLayDir, Color.black, 0.5f);
+        RaycastHit2D hit = Physics2D.Raycast(_searchLayOrigin.position, _searchLayDir * _sreachRange, 1, _currentSearchLayer);
+        Debug.DrawRay(_searchLayOrigin.position, _searchLayDir * _sreachRange, Color.black, 0.5f);
         if(hit.collider == null )
         {
             return null;
