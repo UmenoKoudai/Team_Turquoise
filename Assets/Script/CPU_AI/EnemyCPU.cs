@@ -77,7 +77,8 @@ public class EnemyCPU : MonoBehaviour
         if (collision.gameObject.layer == _player.layer)
         {
             _isDetectedPlayer = true;
-            collision.gameObject.SetActive(false);
+            GameInfo.Instance.GameManager.SceneChange(GameManager.SceneState.GameOver);
+            //collision.gameObject.SetActive(false);
         }
     }
 }

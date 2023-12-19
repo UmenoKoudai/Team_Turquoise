@@ -3,7 +3,7 @@ using UnityEngine;
 public class Stairs : MonoBehaviour
 {
     [SerializeField]
-    private string _sceneName;
+    private GameManager.SceneState _scene;
 
     GameInfo _gameInfo;
 
@@ -16,7 +16,7 @@ public class Stairs : MonoBehaviour
     {
         if(collision.gameObject.layer == 6)
         {
-            _gameInfo.GameManager.SceneChange(_sceneName);
+            _gameInfo.GameManager.SceneChange(_scene);
         }
     }
 }
