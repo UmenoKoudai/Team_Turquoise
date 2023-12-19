@@ -1,26 +1,26 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UniRx.Triggers;
 using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
-/// <summary>Player‚Ì–{‘Ì‚ÌƒRƒ“ƒgƒ[ƒ‰[</summary>
+/// <summary>Playerã®æœ¬ä½“ã®ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼</summary>
 public class PlayerRealControlle : MonoBehaviour, IState
 {
     [SerializeField]
-    [Header("•às‘¬“x")]
+    [Header("æ­©è¡Œé€Ÿåº¦")]
     float _moveSpeed;
 
     BoxCollider2D _collider;
     Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
     Animator _anim = null;
-    /// <summary>ˆÚ“®•ûŒüY</summary>
+    /// <summary>ç§»å‹•æ–¹å‘Y</summary>
     float _moveDirY = 0;
-    /// <summary>ˆÚ“®•ûŒüX</summary>
+    /// <summary>ç§»å‹•æ–¹å‘X</summary>
     float _moveDirX = 0;
-    /// <summary>•¨‰A‚É‰B‚ê‚Ä‚¢‚é‚©‚Ç‚¤‚©</summary>
+    /// <summary>ç‰©é™°ã«éš ã‚Œã¦ã„ã‚‹ã‹ã©ã†ã‹</summary>
     bool _isHide = false;
 
     public bool IsHide => _isHide;
