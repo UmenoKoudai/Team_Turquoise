@@ -7,7 +7,7 @@ using SLib.StateSequencer;
 using SLib;
 using SLib.AI;
 
-public class StatePatroll : IState
+public class StatePatroll : IStateMachineState
 {
 
     #region IsDebuggin

@@ -11,15 +11,15 @@ namespace SLib
         public class StateSequencer
         {
             // 通常ステート
-            HashSet<IState> _states = new HashSet<IState>();
+            HashSet<IStateMachineState> _states = new HashSet<IStateMachineState>();
             // Anyステートからのステート
-            HashSet<IState> _statesFromAnyState = new HashSet<IState>();
+            HashSet<IStateMachineState> _statesFromAnyState = new HashSet<IStateMachineState>();
             // トランジション
             HashSet<StateMachineTransition> _transitions = new HashSet<StateMachineTransition>();
             // Anyからのトランジション
             HashSet<StateMachineTransition> _transitionsFromAny = new HashSet<StateMachineTransition>();
             // 現在突入しているステート
-            IState _currentPlayingState;
+            IStateMachineState _currentPlayingState;
             // 現在突入しているトランジション名
             string _currentTransitionName;
             // ステートマシンが一時停止中かのフラグ
@@ -32,7 +32,7 @@ namespace SLib
             #region 登録処理
             /// <summary> ステートの登録 </summary>
             /// <param name="state"></param>
-            public void ResistState(IState state)
+            public void ResistState(IStateMachineState state)
             {
                 _states.Add(state);
                 if (_currentPlayingState == null) { _currentPlayingState = state; }
@@ -40,16 +40,16 @@ namespace SLib
 
             /// <summary> Anyからのステートの登録 </summary>
             /// <param name="state"></param>
-            public void ResisteStateFromAny(IState state)
+            public void ResisteStateFromAny(IStateMachineState state)
             {
                 _statesFromAnyState.Add(state);
             }
 
             /// <summary> 複数のステートを引数に渡してすべての渡されたステートを登録 </summary>
             /// <param name="states"></param>
-            public void ResistStates(List<IState> states)
+            public void ResistStates(List<IStateMachineState> states)
             {
-                foreach (IState state in states)
+                foreach (IStateMachineState state in states)
                 {
                     _states.Add(state);
                     if (_currentPlayingState == null) { _currentPlayingState = state; }
@@ -58,9 +58,9 @@ namespace SLib
 
             /// <summary> 複数のステートを引数に渡してすべての渡されたAnyからのステートを登録 </summary>
             /// <param name="states"></param>
-            public void ResistStatesFromAny(List<IState> states)
+            public void ResistStatesFromAny(List<IStateMachineState> states)
             {
-                foreach (IState state in _statesFromAnyState)
+                foreach (IStateMachineState state in _statesFromAnyState)
                 {
                     _states.Add(state);
                 }
@@ -70,7 +70,7 @@ namespace SLib
             /// <param name="from"></param>
             /// <param name="to"></param>
             /// <param name="name"></param>
-            public void MakeTransition(IState from, IState to, string name)
+            public void MakeTransition(IStateMachineState from, IStateMachineState to, string name)
             {
                 var tmp = new StateMachineTransition(from, to, name);
                 _transitions.Add(tmp);
@@ -80,7 +80,7 @@ namespace SLib
             /// <param name="from"></param>
             /// <param name="to"></param>
             /// <param name="name"></param>
-            public void MakeTransitionFromAny(IState to, string name)
+            public void MakeTransitionFromAny(IStateMachineState to, string name)
             {
                 var tmp = new StateMachineTransition(new DummyStateClass(), to, name);
                 _transitionsFromAny.Add(tmp);
@@ -174,13 +174,13 @@ namespace SLib
         /// <summary> ステート間遷移の情報を格納している </summary>
         public class StateMachineTransition
         {
-            IState _from;
-            public IState SFrom => _from;
-            IState _to;
-            public IState STo => _to;
+            IStateMachineState _from;
+            public IStateMachineState SFrom => _from;
+            IStateMachineState _to;
+            public IStateMachineState STo => _to;
             string _name;
             public string Name => _name;
-            public StateMachineTransition(IState from, IState to, string name)
+            public StateMachineTransition(IStateMachineState from, IStateMachineState to, string name)
             {
                 _from = from;
                 _to = to;
@@ -189,7 +189,7 @@ namespace SLib
         }
 
         /// <summary> ステートとして登録をするクラスが継承するべきインターフェース </summary>
-        public interface IState
+        public interface IStateMachineState
         {
             public void Entry();
             public void Tick();
@@ -197,7 +197,7 @@ namespace SLib
         }
 
         /// <summary> ダミーのステートのクラス </summary>
-        class DummyStateClass : IState
+        class DummyStateClass : IStateMachineState
         {
             public void Entry()
             {
