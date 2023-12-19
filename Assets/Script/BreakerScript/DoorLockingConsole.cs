@@ -9,6 +9,9 @@ public class DoorLockingConsole : MonoBehaviour
         Header("これをアクティブにするため必要なブレーカー")]
     List<Breaker> _breakers = new List<Breaker>();
 
+    [SerializeField]
+    Animator _anim;
+
     int _activeCount;
 
     bool _isActive = false;
@@ -21,6 +24,7 @@ public class DoorLockingConsole : MonoBehaviour
         if (_activeCount == _breakers.Count && !_isActive)
         {
             _isActive = true;
+            _anim?.Play("OpenDoor");
             Debug.Log("Activated Door Console!");
         }
     }
