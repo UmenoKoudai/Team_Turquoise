@@ -4,6 +4,7 @@ using UnityEngine;
 /// </summary>
 public class Open : MonoBehaviour, IAction
 {
+    [SerializeField]
     Animator _openAnimator;
     [SerializeField] float _closingTime;
     float _eTime;
@@ -14,22 +15,22 @@ public class Open : MonoBehaviour, IAction
         _isOpened = (!_isOpened) ? true : _isOpened;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _openAnimator = GetComponent<Animator>();
-    }
+    //// Start is called before the first frame update
+    //void Start()
+    //{
+    //    _openAnimator = GetComponent<Animator>();
+    //}
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        _eTime += (_isOpened) ? Time.deltaTime : 0;
+    //// Update is called once per frame
+    //void FixedUpdate()
+    //{
+    //    _eTime += (_isOpened) ? Time.deltaTime : 0;
 
-        if (_eTime > _closingTime)
-        {
-            _openAnimator.SetBool("Open", false);
-            _isOpened = false;
-            _eTime = 0;
-        }
-    }
+    //    if (_eTime > _closingTime)
+    //    {
+    //        _openAnimator.SetBool("Open", false);
+    //        _isOpened = false;
+    //        _eTime = 0;
+    //    }
+    //}
 }
