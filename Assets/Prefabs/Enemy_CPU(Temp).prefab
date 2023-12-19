@@ -24,14 +24,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3790882181546935072}
-  m_LocalRotation: {x: -0, y: -0, z: -0.702512, w: 0.71167195}
-  m_LocalPosition: {x: 0.66, y: 0.03, z: 0}
-  m_LocalScale: {x: 0.27522, y: 0.27522, z: 0.27522}
+  m_LocalRotation: {x: -0, y: -0, z: -0.0020088938, w: 0.99999803}
+  m_LocalPosition: {x: 3.57, y: 0.55, z: 0}
+  m_LocalScale: {x: 1.1217692, y: 1.1217692, z: 1.1217692}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3790882182183154974}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -89.258}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.23}
 --- !u!212 &3790882181546935074
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8720abd321ab44143a3092f92c2b31e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f0332c1b0775e804e994bd5cbae767cc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -227,12 +227,14 @@ EdgeCollider2D:
   m_Offset: {x: 0, y: 0}
   m_EdgeRadius: 0
   m_Points:
-  - {x: -0.5, y: 0}
-  - {x: 3.0285115, y: 6.139348}
-  - {x: 8.941462, y: 3.1234734}
-  - {x: 8.991868, y: -3.9740438}
-  - {x: 2.9337518, y: -6.012521}
-  - {x: -0.41703987, y: -0.044733524}
+  - {x: 0.7361336, y: 0.42140913}
+  - {x: 4.3325634, y: 3.5387666}
+  - {x: 5.107463, y: 3.4985182}
+  - {x: 6.468834, y: 1.6623209}
+  - {x: 6.420703, y: -0.8814695}
+  - {x: 5.5052114, y: -2.3249495}
+  - {x: 4.1587934, y: -2.4080722}
+  - {x: 0.76088476, y: 0.3557608}
   m_AdjacentStartPoint: {x: 0, y: 0}
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
