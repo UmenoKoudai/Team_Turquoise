@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,17 +10,22 @@ public class GameManager : MonoBehaviour
     Text __skillCountText;
 
     [SerializeField]
-    GameState _state = GameState.Title;
-
-    //private int _skillCount = 0;
-    public int SkillCount = 0;
+    GameState _gameState = GameState.Title;
 
     public enum GameState
     {
         Title,
         InGame,
         GameOver,
+    }
+    
+    public enum SceneState
+    {
+        Title,
+        B2F,
+        B1F,
         Result,
+        GameOver,
     }
 
     private void OnEnable()
@@ -27,19 +33,37 @@ public class GameManager : MonoBehaviour
         GameInfo.Instance.GameManager = this;
     }
 
-    void Update()
-    {
-        if (_state != GameState.InGame) return;
-        //_skillCountText.text = _skillCount.ToString();
-    }
-
     public void StateChange(GameState state)
     {
-        _state = state;
+        _gameState = state;
     }
 
-    public void SceneChange(string scene)
+    public void SceneChange(SceneState scene)
     {
-        SceneManager.LoadScene(scene);
+        switch(scene)
+        {
+            case SceneState.Title:
+                StartCoroutine(SceneChange("Title"));
+                break;
+            case SceneState.B2F:
+                StartCoroutine(SceneChange("B2F"));
+                break;
+            case SceneState.B1F:
+                StartCoroutine(SceneChange("B1F"));
+                break;
+            case SceneState.Result:
+                StartCoroutine(SceneChange("1F"));
+                break;
+            case SceneState.GameOver:
+                StartCoroutine(SceneChange("GameOver"));
+                break;
+        }
+    }
+
+    IEnumerator SceneChange(string sceneName)
+    {
+        Application.LoadLevelAdditive("Loading");
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(sceneName);
     }
 }
