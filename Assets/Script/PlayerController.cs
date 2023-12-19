@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             IAction action = Search();
             if (action != null)
             {
-                if (Input.GetKeyDown(KeyCode.Z))
+                if (Input.GetKeyDown(KeyCode.Return))
                 {
                     action.Action(GameInfo.Instance);
                 }
