@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 // ©ìƒ‰ƒCƒuƒ‰ƒŠ
 using SLib.StateSequencer;
-public class StateDetectPlayer : IState
+public class StateDetectPlayer : IStateMachineState
 {
     Rigidbody2D _rb2d;
 

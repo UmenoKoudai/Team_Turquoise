@@ -45,7 +45,7 @@ public class EnemyCPU : MonoBehaviour
         _detect = new StateDetectPlayer(_rb2d);
 
         // ƒXƒe[ƒg“o˜^
-        _sSeqencer.ResistStates(new List<IState>() { _patroll, _detect });
+        _sSeqencer.ResistStates(new List<IStateMachineState>() { _patroll, _detect });
 
         // ‘JˆÚ“o˜^
         _sSeqencer.MakeTransition(_patroll, _detect, PatrollToDetect);
