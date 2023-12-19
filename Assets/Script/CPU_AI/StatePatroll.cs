@@ -20,15 +20,17 @@ public class StatePatroll : IStateMachineState
     List<Vector3> _pPath = new List<Vector3>(); //  ルートから得たパスの動的配列
 
     Rigidbody2D _rb2;
+    SpriteRenderer _spriteRenderer;
     float _speed;
 
-    public StatePatroll(Transform dTransform, PathHolder pathRoot, Rigidbody2D rb2, float speed)
+    public StatePatroll(Transform dTransform, PathHolder pathRoot, Rigidbody2D rb2, SpriteRenderer spriteRenderer, float speed)
     {
         _cTransform = dTransform;
         _pathRoot = pathRoot;
         _rb2 = rb2;
         _pPath = _pathRoot.GetPatrollingPath().ToList();
         _cIndex = 0;
+        _spriteRenderer = spriteRenderer;
         _speed = speed;
     }
 
@@ -72,6 +74,8 @@ public class StatePatroll : IStateMachineState
         pSelf = _cTransform.position;
         Vector2 dir = (pTar - pSelf).normalized;
         _rb2.velocity = dir * _speed;
+
+        _spriteRenderer.flipY = (dir.x < 0);
 
         float distance = DistanceSqwared(pTar, pSelf);
 

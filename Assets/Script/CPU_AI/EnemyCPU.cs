@@ -10,8 +10,8 @@ using SLib.AI;
 public class EnemyCPU : MonoBehaviour
 {
     // レイヤーマスクで プレイヤーの検知 Physics.CheckSphere() を使う
-    [SerializeField, 
-        Header("パトロールの道筋のオブジェクトをアタッチ")] 
+    [SerializeField,
+        Header("パトロールの道筋のオブジェクトをアタッチ")]
     PathHolder _pRoot;
     [SerializeField,
         Header("移動速度")]
@@ -28,6 +28,7 @@ public class EnemyCPU : MonoBehaviour
     StateDetectPlayer _detect;      // 確保ステート
 
     Rigidbody2D _rb2d;
+    SpriteRenderer _sRenderer;
 
     bool _isDetectedPlayer;
 
@@ -40,8 +41,9 @@ public class EnemyCPU : MonoBehaviour
     private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
+        _sRenderer = GetComponent<SpriteRenderer>();
 
-        _patroll = new StatePatroll(transform, _pRoot, _rb2d, _mSpeed);
+        _patroll = new StatePatroll(transform, _pRoot, _rb2d, _sRenderer, _mSpeed);
         _detect = new StateDetectPlayer(_rb2d);
 
         // ステート登録
@@ -72,7 +74,7 @@ public class EnemyCPU : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.layer == _player.layer)
+        if (collision.gameObject.layer == _player.layer)
         {
             _isDetectedPlayer = true;
             collision.gameObject.SetActive(false);
