@@ -16,6 +16,7 @@ public class StateDetectPlayer : IStateMachineState
     public void Entry()
     {
         _rb2d.Sleep();
+        GameInfo.Instance.GameManager.SceneChange(GameManager.SceneState.GameOver);
     }
 
     public void Exit()

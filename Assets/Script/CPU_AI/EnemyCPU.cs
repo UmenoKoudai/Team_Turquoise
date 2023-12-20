@@ -6,6 +6,7 @@ using SLib.StateSequencer;
 using SLib.AI;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 /// <summary> 敵AIの機能を提供する </summary>
 public class EnemyCPU : MonoBehaviour, IAction
 {
@@ -31,6 +32,7 @@ public class EnemyCPU : MonoBehaviour, IAction
     StateDetectPlayer _detect;      // 確保ステート
 
     Rigidbody2D _rb2d;
+    Animator _anim;
     SpriteRenderer _sRenderer;
 
     bool _isDetectedPlayer;
@@ -46,6 +48,7 @@ public class EnemyCPU : MonoBehaviour, IAction
     {
         _rb2d = GetComponent<Rigidbody2D>();
         _sRenderer = GetComponent<SpriteRenderer>();
+        _anim = GetComponent<Animator>();
 
         _patroll = new StatePatroll(transform, _pRoot, _rb2d, _sRenderer, _mSpeed);
         _detect = new StateDetectPlayer(_rb2d);
@@ -82,7 +85,6 @@ public class EnemyCPU : MonoBehaviour, IAction
         {
             AudioController.Instance.SePlay(AudioController.SeClass.SE.EnemyDiscover);
             _isDetectedPlayer = true;
-            GameInfo.Instance.GameManager.SceneChange(GameManager.SceneState.GameOver);
         }
     }
 
