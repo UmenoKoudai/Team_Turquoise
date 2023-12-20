@@ -34,6 +34,7 @@ public class GameInfo : MonoBehaviour
 
     public GameInfo Set()
     {
+        AudioController.Instance.SePlay(AudioController.SeClass.SE.Walk);
         return GameInfo.Instance;
     }
 }
