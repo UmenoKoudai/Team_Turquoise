@@ -63,5 +63,6 @@ public class StealthFunction : MonoBehaviour, IAction
             _target.layer = 6;
             _ui.SetActive(false);
         }
+        AudioController.Instance.SePlay(AudioController.SeClass.SE.AstralChange);
     }
 }
