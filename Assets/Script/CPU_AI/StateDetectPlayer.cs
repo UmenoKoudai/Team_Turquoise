@@ -15,7 +15,6 @@ public class StateDetectPlayer : IStateMachineState
    
     public void Entry()
     {
-        Debug.Log("You Are Died");
         _rb2d.Sleep();
     }
 
