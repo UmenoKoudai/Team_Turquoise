@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("仮想カメラ")]
     CinemachineVirtualCamera _playerVCM;
 
+    PlayerAstralControlle _playerAstralControlle;
     PlayerUIControlle _playerUIControl;
     /// <summary>現在Actionを起こせるLayer</summary>
     LayerMask _currentSearchLayer;
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
         _stateReal = _realGO.GetComponent<IState>();
         _stateAstral = _astralGO.GetComponent<IState>();
         _playerUIControl = GetComponent<PlayerUIControlle>();
+        _playerAstralControlle = _astralGO.GetComponent<PlayerAstralControlle>();
         _stateReal.OnStart();
         _stateAstral.OnStart();
         _currentSearchLayer = _realPlayerSearchLayer;
@@ -144,8 +146,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void FixedUpdate()
-    { 
-        _currentState.OnFixedUpdate();
+    {
+        if (!_isToRealMoving)
+        {
+            _currentState.OnFixedUpdate();
+        }
     }
 
     /// <summary>幽体と本体の入れ替え</summary>
@@ -160,7 +165,8 @@ public class PlayerController : MonoBehaviour
                 .OnComplete(() => 
                 {
                     _isToRealMoving = false; 
-                    _playerVCM.Follow = _realGO.transform; 
+                    _playerVCM.Follow = _realGO.transform;
+                    _playerAstralControlle.SpriteClear(true);
                 });
         }
         else
