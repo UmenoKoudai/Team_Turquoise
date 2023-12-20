@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
     /// <returns>起こすAction</returns>
     public IAction Search()
     {
-        RaycastHit2D hit = Physics2D.Raycast(_searchLayOrigin.position, _searchLayDir * _sreachRange, 1, _currentSearchLayer);
+        RaycastHit2D hit = Physics2D.Raycast(_searchLayOrigin.position, _searchLayDir, _sreachRange, _currentSearchLayer);
         Debug.DrawRay(_searchLayOrigin.position, _searchLayDir * _sreachRange, Color.black, 0.5f);
         if(hit.collider == null )
         {
