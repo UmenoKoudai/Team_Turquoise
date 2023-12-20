@@ -38,6 +38,8 @@ public class StatePatroll : IStateMachineState
     public void FramesTask(Transform selfTransform)    // 毎フレーム呼び出される処理
     {
         UpdateTransform(selfTransform); // 座標更新
+        AudioController.Instance.SePlay(AudioController.SeClass.SE.EnemyWalk1);
+        AudioController.Instance.SePlay(AudioController.SeClass.SE.EnemyWalk2);
     }
 
     void UpdateTransform(Transform transform)

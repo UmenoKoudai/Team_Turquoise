@@ -80,6 +80,7 @@ public class EnemyCPU : MonoBehaviour, IAction
     {
         if (collision.gameObject.layer == _player.layer)
         {
+            AudioController.Instance.SePlay(AudioController.SeClass.SE.EnemyDiscover);
             _isDetectedPlayer = true;
             GameInfo.Instance.GameManager.SceneChange(GameManager.SceneState.GameOver);
         }
