@@ -13,5 +13,6 @@ public class BrakerSwitch : MonoBehaviour
         _active = !_active;
         if (!_activeLight) return;
         _activeLight.color = Color.green;
+        AudioController.Instance.SePlay(AudioController.SeClass.SE.Breaker);
     }
 }

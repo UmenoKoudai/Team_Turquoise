@@ -9,6 +9,7 @@ public class LightSwitch : MonoBehaviour
     {
         if (other.gameObject.layer != 6) return;
         _lightObject.SetActive(true);
+        AudioController.Instance.SePlay(AudioController.SeClass.SE.Switch);
     }
 
     private void OnTriggerExit2D(Collider2D collision)

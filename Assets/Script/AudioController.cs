@@ -75,10 +75,14 @@ public class AudioController : MonoBehaviour
         {
             Click,
             DoorOpen,
-            DoorClose,
+            EnemyWalk1,
+            EnemyWalk2,
+            EnemyDiscover,
+            AstralChange,
             Walk,
-            Stealth,
             EnemyDiscovery,
+            Breaker,
+            Switch,
         }
     }
 
@@ -95,10 +99,10 @@ public class AudioController : MonoBehaviour
 
         public enum BGM
         {
-            Title,
-            InGame,
-            Result,
-            GameOver,
+            Basic,
+            B1F,
+            Ending,
+            GameOver
         }
     }
 }
