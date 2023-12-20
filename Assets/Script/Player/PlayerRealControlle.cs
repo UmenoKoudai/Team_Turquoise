@@ -12,9 +12,9 @@ public class PlayerRealControlle : MonoBehaviour, IState
     [Header("歩行速度")]
     float _moveSpeed;
 
-    BoxCollider2D _collider;
-    Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
+    CapsuleCollider2D _collider;
+    Rigidbody2D _rb;
     Animator _anim = null;
     /// <summary>移動方向Y</summary>
     float _moveDirY = 0;
@@ -27,23 +27,33 @@ public class PlayerRealControlle : MonoBehaviour, IState
     public void OnStart()
     {
         _anim = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<BoxCollider2D>();
+        _collider = GetComponent<CapsuleCollider2D>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer.sortingOrder = 1;
+        _anim.SetFloat("move_x", 0);
+        _anim.SetFloat("move_y", -1);
     }
 
     public void OnEnter()
     {
         _spriteRenderer.sortingOrder = 1;
+        _anim.SetFloat("move_x", 0);
+        _anim.SetFloat("move_y", -1);
         _collider.enabled = true;
     }
     public void OnUpdate()
     {
-        _moveDirX = Input.GetAxisRaw("Horizontal");
-        _moveDirY = Input.GetAxisRaw("Vertical");
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if(!_isHide)
         {
-            HadeAction();
+            _moveDirX = Input.GetAxisRaw("Horizontal");
+            _moveDirY = Input.GetAxisRaw("Vertical");
+            if (_moveDirX != 0 || _moveDirY != 0)
+            {
+                _anim.SetFloat("move_x", _moveDirX);
+                _anim.SetFloat("move_y", _moveDirY);
+            }
+            _anim.SetFloat("walk", _rb.velocity.magnitude);
         }
     }
     public void OnFixedUpdate()
@@ -61,14 +71,16 @@ public class PlayerRealControlle : MonoBehaviour, IState
     {
         _spriteRenderer.sortingOrder = 0;
         _collider.enabled = false;
+        _anim.SetFloat("move_x", 0);
+        _anim.SetFloat("move_y", -1);
         _rb.velocity = Vector2.zero;
+        _anim.SetFloat("walk", _rb.velocity.magnitude);
     }
     public void HadeAction()
     {
         _isHide = !_isHide;
         _rb.velocity = Vector2.zero;
     }
-
 }
 
     
