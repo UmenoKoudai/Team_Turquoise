@@ -51,7 +51,7 @@ public class EnemyCPU : MonoBehaviour, IAction
         _anim = GetComponent<Animator>();
 
         _patroll = new StatePatroll(transform, _pRoot, _rb2d, _sRenderer, _mSpeed);
-        _detect = new StateDetectPlayer(_rb2d);
+        _detect = new StateDetectPlayer(_rb2d, _anim);
 
         // ステート登録
         _sSeqencer.ResistStates(new List<IStateMachineState>() { _patroll, _detect });
@@ -86,6 +86,12 @@ public class EnemyCPU : MonoBehaviour, IAction
             AudioController.Instance.SePlay(AudioController.SeClass.SE.EnemyDiscover);
             _isDetectedPlayer = true;
         }
+    }
+
+    IEnumerator OnAttackEnd()  // 攻撃演出が終わったときにAnimatorから呼び出す
+    {
+        yield return new WaitForSeconds(1.0f);
+        GameInfo.Instance.GameManager.SceneChange(GameManager.SceneState.GameOver);
     }
 
     IEnumerator StunRoutine(float stunningTime)
