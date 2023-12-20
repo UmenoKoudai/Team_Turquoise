@@ -7,6 +7,7 @@ public class SceneChangeInvoker : MonoBehaviour
 
     public void SceneLoading()
     {
+        AudioController.Instance.SePlay(AudioController.SeClass.SE.Click);
         GameInfo.Instance.GameManager.SceneChange(_state);
     }
 }
