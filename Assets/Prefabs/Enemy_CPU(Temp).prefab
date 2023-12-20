@@ -190,6 +190,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _player: {fileID: 0}
+  _stunTime: 1
 --- !u!50 &3790882182183154968
 Rigidbody2D:
   serializedVersion: 4
