@@ -27,7 +27,6 @@ public class DoorLockingConsole : MonoBehaviour
         {
             _isActive = true;
             _anim?.Play("OpenDoor");
-            Debug.Log("Activated Door Console!");
         }
     }
 }

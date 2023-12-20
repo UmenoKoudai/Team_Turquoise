@@ -25,5 +25,4 @@ public class Breaker : MonoBehaviour, IAction
     }
 
     public bool IsActivated() { return _isActivated; }
-
 }
