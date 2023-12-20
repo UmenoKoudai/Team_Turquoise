@@ -99,11 +99,10 @@ public class AudioController : MonoBehaviour
 
         public enum BGM
         {
-            Title,
-            InGame,
-            Result,
-            GameOver,
+            Basic,
             B1F,
+            Ending,
+            GameOver
         }
     }
 }

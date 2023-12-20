@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     List<int> _messageIndex = new List<int>();
     [SerializeField]
     Animator _anim;
+    [SerializeField]
+    AudioController.BgmClass.BGM _sceneBGM;
 
     bool _isOpen = false;
     bool _isMessageEnd = false;
@@ -45,6 +47,11 @@ public class GameManager : MonoBehaviour
     {
         GameInfo.Instance.GameManager = this;
         //ShowMessage(_messageIndex);
+    }
+
+    private void Start()
+    {
+        AudioController.Instance.BgmPlay(_sceneBGM);
     }
 
     public void MessageWindow()
