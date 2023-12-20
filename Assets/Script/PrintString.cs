@@ -14,6 +14,11 @@ public class PrintString : MonoBehaviour
     private string _currentText;
     private int _stringIndex;
 
+
+    private void Awake()
+    {
+        GameInfo.Instance.Printer = this;
+    }
     /// <summary>テキストを表示するメソッド</summary>
     /// <param name="textnum">表示するテキストの要素番号</param>
     IEnumerator PrintOneByOne(int textnum)
