@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public enum SceneState
     {
         Title,
+        Opening,
         B2F,
         B1F,
         Result,
@@ -90,6 +91,9 @@ public class GameManager : MonoBehaviour
         {
             case SceneState.Title:
                 StartCoroutine(SceneChange("Title"));
+                break;
+            case SceneState.Opening:
+                StartCoroutine(SceneChange("Opening"));
                 break;
             case SceneState.B2F:
                 StartCoroutine(SceneChange("B2F"));
