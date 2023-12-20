@@ -10,15 +10,8 @@ public class BrakerSwitch : MonoBehaviour
 
     public void SwitchActive()
     {
-        if (!_activeLight) return;
         _active = !_active;
-        if(_active)
-        {
-            _activeLight.color = Color.green;
-        }
-        else
-        {
-            _activeLight.color = Color.red;
-        }
+        if (!_activeLight) return;
+        _activeLight.color = Color.green;
     }
 }

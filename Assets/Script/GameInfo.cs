@@ -26,6 +26,12 @@ public class GameInfo : MonoBehaviour
         get => _gameManager; set => _gameManager = value;
     }
 
+    private PrintString _printer;
+    public PrintString Printer
+    {
+        get => _printer; set => _printer = value;
+    }
+
     public GameInfo Set()
     {
         return GameInfo.Instance;
