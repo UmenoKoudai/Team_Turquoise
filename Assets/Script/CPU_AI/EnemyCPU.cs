@@ -7,7 +7,7 @@ using SLib.AI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 /// <summary> 敵AIの機能を提供する </summary>
-public class EnemyCPU : MonoBehaviour
+public class EnemyCPU : MonoBehaviour, IAction
 {
     // レイヤーマスクで プレイヤーの検知 Physics.CheckSphere() を使う
     [SerializeField,
@@ -22,6 +22,9 @@ public class EnemyCPU : MonoBehaviour
     [SerializeField,
         Header("プレイヤー")]
     GameObject _player;
+    [SerializeField,
+        Header("スタン時間")]
+    float _stunTime;
 
     StateSequencer _sSeqencer = new StateSequencer();   // ステートマシン
     StatePatroll _patroll;  //  パトロールステート
@@ -31,6 +34,7 @@ public class EnemyCPU : MonoBehaviour
     SpriteRenderer _sRenderer;
 
     bool _isDetectedPlayer;
+    bool _isStunning;
 
     #region TransitionNames
     const string PatrollToDetect = "DetectP";
@@ -79,5 +83,19 @@ public class EnemyCPU : MonoBehaviour
             _isDetectedPlayer = true;
             GameInfo.Instance.GameManager.SceneChange(GameManager.SceneState.GameOver);
         }
+    }
+
+    IEnumerator StunRoutine(float stunningTime)
+    {
+        _isStunning = true;
+        _sSeqencer.FreezStateMachine();
+        yield return new WaitForSeconds(stunningTime);
+        _isStunning = false;
+        _sSeqencer.InitStateMachine();
+    }
+
+    public void Action(GameInfo info)   // スタン処理
+    {
+        StartCoroutine(StunRoutine(_stunTime));
     }
 }
