@@ -1,16 +1,19 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-
-    [SerializeField]
-    Text __skillCountText;
-
     [SerializeField]
     GameState _gameState = GameState.Title;
+    [SerializeField]
+    List<int> _messageIndex = new List<int>();
+    [SerializeField]
+    Animator _anim;
+
+    bool _isOpen = false;
+    bool _isMessageEnd = false;
 
     public enum GameState
     {
@@ -31,6 +34,36 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         GameInfo.Instance.GameManager = this;
+        ShowMessage(_messageIndex);
+    }
+
+    public void MessageWindow()
+    {
+        if(!_isOpen)
+        {
+            _anim.Play("Show");
+            _isOpen = true;
+        }
+        if(_isMessageEnd)
+        {
+            _anim.Play("Close");
+            _isOpen = false;
+        }
+    }
+
+    public void ShowMessage(List<int> messageIndex)
+    {
+        MessageWindow();
+        if (messageIndex.Count > 0)
+        {
+            int index = messageIndex[0];
+            GameInfo.Instance.Printer.CallPrintOneByOne(index);
+            messageIndex.RemoveAt(0);
+        }
+        else
+        {
+            _isMessageEnd = true;
+        }
     }
 
     public void StateChange(GameState state)
