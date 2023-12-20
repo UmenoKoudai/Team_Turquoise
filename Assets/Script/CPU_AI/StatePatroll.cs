@@ -21,6 +21,7 @@ public class StatePatroll : IStateMachineState
 
     Rigidbody2D _rb2;
     SpriteRenderer _spriteRenderer;
+
     float _speed;
 
     public StatePatroll(Transform dTransform, PathHolder pathRoot, Rigidbody2D rb2, SpriteRenderer spriteRenderer, float speed)
@@ -69,6 +70,7 @@ public class StatePatroll : IStateMachineState
 
     public void Tick()
     {
+        // 向き計算
         Vector2 pTar, pSelf;
         pTar = _pPath[_cIndex];
         pSelf = _cTransform.position;
@@ -77,15 +79,16 @@ public class StatePatroll : IStateMachineState
 
         _spriteRenderer.flipY = (dir.x < 0);
 
+        // 目標地点到達かの判定
         float distance = DistanceSqwared(pTar, pSelf);
-
-        Vector3 rotDiff = (_pPath[_cIndex] - _cTransform.position);
-        _cTransform.rotation = Quaternion.FromToRotation(Vector3.right, rotDiff);
-
         if (distance < 1)
         {
             _cIndex = (_cIndex + 1 < _pPath.Count) ? _cIndex + 1 : 0;
         }
+
+        // 目標への回転
+        Vector3 rotDiff = (_pPath[_cIndex] - _cTransform.position);
+        _cTransform.rotation = Quaternion.FromToRotation(Vector3.right, rotDiff);
 
         #region DB_Log
         if (_ISDEBUG_)

@@ -72,11 +72,20 @@ namespace SLib
             [SerializeField,
                 Header("イージングモード")] 
             UIEasingMode _mode;
+            // シーンに入ったらTweenするのか
+            [SerializeField,
+                Header("シーン突入時にTweenを開始するのか")]
+            bool _startOnAwake;
 
             // アニメーションしているかのフラグ
             bool _bIsAnimating = false;
             public bool IsTweening => _bIsAnimating;
             float _elapsedTime = 0;
+
+            private void Start()
+            {
+                if (_startOnAwake) StartTween();
+            }
 
             private void FixedUpdate()
             {
