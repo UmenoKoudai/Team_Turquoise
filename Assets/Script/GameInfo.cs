@@ -19,7 +19,12 @@ public class GameInfo : MonoBehaviour
         }
     }
 
-    //public Player Player;
+    private PlayerRealControlle _playerReal;
+    public PlayerRealControlle PlayerReal
+    {
+        get => _playerReal;
+        set => _playerReal = value;
+    }
     private GameManager _gameManager;
     public GameManager GameManager
     {

@@ -26,6 +26,7 @@ public class PlayerRealControlle : MonoBehaviour, IState
     public bool IsHide => _isHide;
     public void OnStart()
     {
+        GameInfo.Instance.PlayerReal = this;
         _anim = GetComponent<Animator>();
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<CapsuleCollider2D>();
