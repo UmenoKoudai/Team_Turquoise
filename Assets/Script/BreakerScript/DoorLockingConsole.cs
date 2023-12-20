@@ -19,7 +19,9 @@ public class DoorLockingConsole : MonoBehaviour
     public void NotifyActivated()
     {
         if (_activeCount + 1 <= _breakers.Count)
+        {
             _activeCount++;
+        }
 
         if (_activeCount == _breakers.Count && !_isActive)
         {

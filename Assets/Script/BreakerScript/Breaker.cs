@@ -13,9 +13,17 @@ public class Breaker : MonoBehaviour, IAction
 
     public void Action(GameInfo info)
     {
-        _isActivated = (!_isActivated) ? true : _isActivated;
-        ActivatedAction.Invoke();
+        if (!_isActivated)
+        {
+            ActivatedAction.Invoke();
+            _isActivated = true;
+        }
+        else
+        {
+            return;
+        }
     }
 
     public bool IsActivated() { return _isActivated; }
+
 }
