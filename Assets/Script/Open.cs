@@ -16,6 +16,8 @@ public class Open : MonoBehaviour, IAction
         Debug.Log("ドアアクション");
         _openAnimator.SetBool("Open", true);
         _isOpened = (!_isOpened) ? true : _isOpened;
+        if (_isOpened)
+            AudioController.Instance.SePlay(AudioController.SeClass.SE.DoorOpen);
     }
 
     //// Start is called before the first frame update
