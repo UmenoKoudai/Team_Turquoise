@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/1F.unity
     guid: d65ea304f97f93d409ac4d793a412c0d
+  - enabled: 1
+    path: Assets/Scenes/StaffRoll.unity
+    guid: 13d41f3c9b73bb14db0999cb6b1c1912
   m_configObjects: {}
