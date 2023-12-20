@@ -14,6 +14,15 @@ public class GameManager : MonoBehaviour
 
     bool _isOpen = false;
     bool _isMessageEnd = false;
+    public bool IsMessageEnd
+    {
+        get => _isMessageEnd;
+        set
+        {
+            _anim.Play("Close");
+            _isOpen = false;
+        }
+    }
 
     public enum GameState
     {
@@ -22,7 +31,7 @@ public class GameManager : MonoBehaviour
         GameOver,
         Text,
     }
-    
+
     public enum SceneState
     {
         Title,
@@ -35,36 +44,32 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         GameInfo.Instance.GameManager = this;
-        ShowMessage(_messageIndex);
+        //ShowMessage(_messageIndex);
     }
 
     public void MessageWindow()
     {
-        if(!_isOpen)
+        if (!_isOpen)
         {
             _anim.Play("Show");
             _isOpen = true;
-        }
-        if(_isMessageEnd)
-        {
-            _anim.Play("Close");
-            _isOpen = false;
         }
     }
 
     public void ShowMessage(List<int> messageIndex)
     {
+        StateChange(GameState.Text);
         MessageWindow();
-        if (messageIndex.Count > 0)
+        while (messageIndex.Count > 0)
         {
-            int index = messageIndex[0];
-            //GameInfo.Instance.Printer.CallPrintOneByOne(index);
-            messageIndex.RemoveAt(0);
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                int index = messageIndex[0];
+                //GameInfo.Instance.Printer.CallPrintOneByOne(index);
+                messageIndex.RemoveAt(0);
+            }
         }
-        else
-        {
-            _isMessageEnd = true;
-        }
+        IsMessageEnd = true;
     }
 
     public void StateChange(GameState state)
@@ -74,7 +79,7 @@ public class GameManager : MonoBehaviour
 
     public void SceneChange(SceneState scene)
     {
-        switch(scene)
+        switch (scene)
         {
             case SceneState.Title:
                 StartCoroutine(SceneChange("Title"));

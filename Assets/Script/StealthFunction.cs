@@ -32,6 +32,7 @@ public class StealthFunction : MonoBehaviour, IAction
 
     public void Action(GameInfo info)
     {
+        Debug.Log("ŒÄ‚ñ‚¾");
         Stealth();
     }
 

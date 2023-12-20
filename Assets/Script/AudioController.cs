@@ -75,10 +75,14 @@ public class AudioController : MonoBehaviour
         {
             Click,
             DoorOpen,
-            DoorClose,
+            EnemyWalk1,
+            EnemyWalk2,
+            EnemyDiscover,
+            AstralChange,
             Walk,
-            Stealth,
             EnemyDiscovery,
+            Breaker,
+            Switch,
         }
     }
 
@@ -99,6 +103,7 @@ public class AudioController : MonoBehaviour
             InGame,
             Result,
             GameOver,
+            B1F,
         }
     }
 }
