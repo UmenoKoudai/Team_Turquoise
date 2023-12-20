@@ -37,11 +37,11 @@ public class GameManager : MonoBehaviour
     public enum SceneState
     {
         Title,
-        Opening,
         B2F,
         B1F,
         Result,
         GameOver,
+        StaffRoll,
     }
 
     private void OnEnable()
@@ -92,9 +92,6 @@ public class GameManager : MonoBehaviour
             case SceneState.Title:
                 StartCoroutine(SceneChange("Title"));
                 break;
-            case SceneState.Opening:
-                StartCoroutine(SceneChange("Opening"));
-                break;
             case SceneState.B2F:
                 StartCoroutine(SceneChange("B2F"));
                 break;
@@ -106,6 +103,9 @@ public class GameManager : MonoBehaviour
                 break;
             case SceneState.GameOver:
                 StartCoroutine(SceneChange("GameOver"));
+                break;
+            case SceneState.StaffRoll:
+                StartCoroutine(SceneChange("StaffRoll"));
                 break;
         }
     }

@@ -122,12 +122,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8705535808767420657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b88f89ae9328a24ea7b723df53273f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 90a43379d655de041a6569d5bf2ca842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  texts:
-  - "\u304A\u306F\u3088\u3046\u3054\u3056\u3044\u307E\u3059"
-  - "\u304A\u3084\u3059\u307F\u306A\u3055\u3044"
-  - "\u3055\u3088\u3046\u306A\u3089"
-  _printText: {fileID: 8705535808208822487}
+  texts: []
+  _printText: {fileID: 0}
   _printDuration: 0.5
