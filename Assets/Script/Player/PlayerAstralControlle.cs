@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [RequireComponent(typeof(Animator))]
 /// <summary>Playerの幽体のコントローラー</summary>
@@ -10,6 +12,14 @@ public class PlayerAstralControlle : MonoBehaviour, IState
     [Header("歩行速度")]
     float _moveSpeed;
 
+    [SerializeField]
+    [Header("Idle状態の上下の動き幅")]
+    float _moveYRange;
+
+    [SerializeField]
+    [Header("上下移動の速度")]
+    float _moveYSpeed;
+
     CapsuleCollider2D _collider;
     Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
@@ -18,6 +28,10 @@ public class PlayerAstralControlle : MonoBehaviour, IState
     float _moveDirY = 0;
     /// <summary>移動方向X</summary>
     float _moveDirX = 0;
+
+    float _idleTimer = 0;
+    Vector3 _startPos;
+    float sin;
     public void OnStart()
     {
         _anim = GetComponent<Animator>();
@@ -34,6 +48,7 @@ public class PlayerAstralControlle : MonoBehaviour, IState
         _anim.SetFloat("move_x", 0);
         _anim.SetFloat("move_y", -1);
         _collider.enabled = true;
+        _startPos = transform.position;
     }
     public void OnUpdate()
     {
@@ -44,14 +59,17 @@ public class PlayerAstralControlle : MonoBehaviour, IState
             _anim.SetFloat("move_x", _moveDirX);
             _anim.SetFloat("move_y", _moveDirY);
         }
-        _anim.SetFloat("walk", _rb.velocity.magnitude);
+        //_idleTimer += Time.deltaTime;
+        //sin = Mathf.Sin(_idleTimer);
+
     }
     public void OnFixedUpdate()
     {
         if (_moveDirX == 0 || _moveDirY == 0)
         {
-            _rb.velocity = new Vector2(_moveDirX * _moveSpeed, _moveDirY * _moveSpeed);
+            _rb.velocity = new Vector2(_moveDirX * _moveSpeed,_moveDirY * _moveSpeed);
         }
+        //_rb.AddForce(new Vector2(0, sin), ForceMode2D.Force);
     }
     public void OnExit()
     {
