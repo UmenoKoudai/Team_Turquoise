@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
         Title,
         InGame,
         GameOver,
+        Text,
     }
     
     public enum SceneState
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
         if (messageIndex.Count > 0)
         {
             int index = messageIndex[0];
-            GameInfo.Instance.Printer.CallPrintOneByOne(index);
+            //GameInfo.Instance.Printer.CallPrintOneByOne(index);
             messageIndex.RemoveAt(0);
         }
         else
