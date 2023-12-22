@@ -80,6 +80,7 @@ public class PlayerRealControlle : MonoBehaviour, IState
     public void HadeAction()
     {
         _isHide = !_isHide;
+        _collider.isTrigger = _isHide;
         _rb.velocity = Vector2.zero;
     }
 }
