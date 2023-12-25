@@ -16,6 +16,7 @@ public class PlayerRealControlle : MonoBehaviour, IState
     CapsuleCollider2D _collider;
     Rigidbody2D _rb;
     Animator _anim = null;
+    AudioSource _audioSource;
     /// <summary>移動方向Y</summary>
     float _moveDirY = 0;
     /// <summary>移動方向X</summary>
@@ -31,6 +32,7 @@ public class PlayerRealControlle : MonoBehaviour, IState
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<CapsuleCollider2D>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
         _spriteRenderer.sortingOrder = 1;
         _anim.SetFloat("move_x", 0);
         _anim.SetFloat("move_y", -1);
@@ -53,7 +55,17 @@ public class PlayerRealControlle : MonoBehaviour, IState
             {
                 _anim.SetFloat("move_x", _moveDirX);
                 _anim.SetFloat("move_y", _moveDirY);
+                if(!_audioSource.isPlaying)
+                {
+                    _audioSource.Play();
+                }
             }
+            
+            if(_moveDirX == 0 && _moveDirY == 0)
+            {
+                _audioSource.Stop();
+            }
+            
             _anim.SetFloat("walk", _rb.velocity.magnitude);
         }
     }
@@ -70,6 +82,7 @@ public class PlayerRealControlle : MonoBehaviour, IState
 
     public void OnExit()
     {
+        _audioSource.Stop();
         _spriteRenderer.sortingOrder = 0;
         _collider.enabled = false;
         _anim.SetFloat("move_x", 0);

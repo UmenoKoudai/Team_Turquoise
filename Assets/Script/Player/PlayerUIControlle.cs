@@ -31,6 +31,7 @@ public class PlayerUIControlle : MonoBehaviour
 
     public void PlayerBodyParentChange(Transform parent)
     {
+        ActionImageActive(false);
         _localPos = _actionCanvas.transform.localPosition;
         _actionCanvas.transform.parent = parent;
         _actionCanvas.transform.localPosition = _localPos;
