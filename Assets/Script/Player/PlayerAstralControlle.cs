@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-
-[RequireComponent(typeof(Animator))]
+using DG.Tweening;
 /// <summary>Playerの幽体のコントローラー</summary>
 public class PlayerAstralControlle : MonoBehaviour, IState 
 {
@@ -12,28 +11,23 @@ public class PlayerAstralControlle : MonoBehaviour, IState
     [Header("Idle状態の上下の動き幅")]
     float _moveYRange;
 
-    [SerializeField]
-    [Header("上下移動の速度")]
-    float _moveYSpeed;
-
     CapsuleCollider2D _collider;
     Rigidbody2D _rb;
     SpriteRenderer _spriteRenderer;
     Animator _anim = null;
+    Transform _bodyPos;
     /// <summary>移動方向Y</summary>
     float _moveDirY = 0;
     /// <summary>移動方向X</summary>
     float _moveDirX = 0;
 
-    float _idleTimer = 0;
-    Vector3 _startPos;
-    float sin;
     public void OnStart()
     {
-        _anim = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _anim = transform.GetChild(0).GetComponent<Animator>();
+        _spriteRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _collider = GetComponent<CapsuleCollider2D>();
+        _bodyPos = transform.GetChild(0).transform;
         _spriteRenderer.sortingOrder = 0;
         SpriteClear(true);
         _collider.enabled = false;
@@ -44,7 +38,7 @@ public class PlayerAstralControlle : MonoBehaviour, IState
         _anim.SetFloat("move_x", 0);
         _anim.SetFloat("move_y", -1);
         _collider.enabled = true;
-        _startPos = transform.position;
+        _bodyPos.localPosition = Vector3.zero;
     }
     public void OnUpdate()
     {
@@ -55,17 +49,14 @@ public class PlayerAstralControlle : MonoBehaviour, IState
             _anim.SetFloat("move_x", _moveDirX);
             _anim.SetFloat("move_y", _moveDirY);
         }
-        //_idleTimer += Time.deltaTime;
-        //sin = Mathf.Sin(_idleTimer);
-
+        _anim.SetFloat("walk", _rb.velocity.magnitude);
     }
     public void OnFixedUpdate()
     {
         if (_moveDirX == 0 || _moveDirY == 0)
         {
-            _rb.velocity = new Vector2(_moveDirX * _moveSpeed,_moveDirY * _moveSpeed);
+            _rb.velocity = new Vector2(_moveDirX * _moveSpeed, _moveDirY * _moveSpeed);
         }
-        //_rb.AddForce(new Vector2(0, sin), ForceMode2D.Force);
     }
     public void OnExit()
     {
@@ -74,6 +65,7 @@ public class PlayerAstralControlle : MonoBehaviour, IState
         _anim.SetFloat("move_y", -1);
         _collider.enabled = false;
         _rb.velocity = Vector2.zero;
+        _bodyPos.localPosition = Vector3.zero;
         _anim.SetFloat("walk", _rb.velocity.magnitude);
     }
 

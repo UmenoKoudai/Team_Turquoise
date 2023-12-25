@@ -3,9 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static AudioController.SeClass;
 
-[RequireComponent(typeof(AudioSource))]
 public class AudioController : MonoBehaviour
 {
     [SerializeField]
@@ -36,6 +34,24 @@ public class AudioController : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        if(_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else if(_instance == this)
+        {
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
+        }
+    }
+
+
     public void SePlay(SeClass.SE se)
     {
         SeClass data = null;
@@ -57,8 +73,31 @@ public class AudioController : MonoBehaviour
             data = playSe;
             break;
         }
-        _seAudio?.PlayOneShot(data?.BgmClip);
+        _bgmAudio.clip = data?.BgmClip;
+        _bgmAudio.Play();
     }
+
+    [Serializable]
+    public class BgmClass
+    {
+        [SerializeField]
+        AudioClip _bgmClip;
+        public AudioClip BgmClip => _bgmClip;
+
+        [SerializeField]
+        BGM _bgmState;
+        public BGM BgmState => _bgmState;
+
+        public enum BGM
+        {
+            Title,
+            Basic,
+            B1F,
+            Ending,
+            GameOver
+        }
+    }
+
 
     [Serializable]
     public class SeClass
@@ -85,24 +124,8 @@ public class AudioController : MonoBehaviour
             Switch,
         }
     }
-
-    [Serializable]
-    public class BgmClass
-    {
-        [SerializeField]
-        AudioClip _bgmClip;
-        public AudioClip BgmClip => _bgmClip;
-
-        [SerializeField]
-        BGM _bgmState;
-        public BGM BgmState => _bgmState;
-
-        public enum BGM
-        {
-            Basic,
-            B1F,
-            Ending,
-            GameOver
-        }
-    }
 }
+
+
+
+
