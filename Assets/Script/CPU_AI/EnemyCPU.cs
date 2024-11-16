@@ -4,6 +4,7 @@ using UnityEngine;
 // 自作ライブラリ
 using SLib.StateSequencer;
 using SLib.AI;
+using UnityEngine.Playables;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
@@ -26,6 +27,9 @@ public class EnemyCPU : MonoBehaviour, IAction
     [SerializeField,
         Header("スタン時間")]
     float _stunTime;
+
+    [SerializeField]
+    ShowGameOver gameOver;
 
     StateSequencer _sSeqencer = new StateSequencer();   // ステートマシン
     StatePatroll _patroll;  //  パトロールステート
@@ -84,6 +88,7 @@ public class EnemyCPU : MonoBehaviour, IAction
         if (collision.gameObject.layer == _player.layer)
         {
             AudioController.Instance.SePlay(AudioController.SeClass.SE.EnemyDiscover);
+            gameOver.GameOver();
             _isDetectedPlayer = true;
         }
     }

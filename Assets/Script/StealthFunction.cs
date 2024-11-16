@@ -22,6 +22,7 @@ public class StealthFunction : MonoBehaviour, IAction
     [SerializeField, Tooltip("ステルス場所に表示するUI")] GameObject _ui = default;
     [SerializeField, Tooltip("ステルス時の透明度")][Range(0.0f, 1.0f)] float _alpha = 0.1f;
     [SerializeField, Tooltip("UIのY座標（対象を基準とする）")][Range(0.0f, 3.0f)] float _addY = 2.0f;
+    [Tooltip("隠す前のtarget位置を保存")] Vector3 _targetPosSave = Vector3.zero;
 
     void Start()
     {
@@ -59,6 +60,9 @@ public class StealthFunction : MonoBehaviour, IAction
             // UIの表示位置
             _ui.transform.position = _target.transform.position + new Vector3(0, _addY, 0);
             _ui.SetActive(true);
+            // Playerの場所を変える
+            _targetPosSave = target.transform.position;
+            target.transform.position = transform.position;
         }
         else
         {
@@ -67,6 +71,7 @@ public class StealthFunction : MonoBehaviour, IAction
             _spriteRenderer.color = new Color(_color.r, _color.g, _color.b, color_alpha);
             target.layer = 6;
             _ui.SetActive(false);
+            target.transform.position = _targetPosSave;
         }
         AudioController.Instance.SePlay(AudioController.SeClass.SE.AstralChange);
     }

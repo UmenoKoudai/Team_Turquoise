@@ -171,6 +171,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            AudioController.Instance.SePlay(AudioController.SeClass.SE.AstralChange);
+            _astralGO.transform.position = _realGO.transform.position;
             _playerVCM.Follow = _astralGO.transform;
         }
         _currentSearchLayer = _isReal ? _realPlayerSearchLayer : _astralPlayerSearchLayer;

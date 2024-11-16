@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour
             case SceneState.Title:
                 StartCoroutine(SceneChange("Title"));
                 break;
-                case SceneState.Opening:
+            case SceneState.Opening:
                 StartCoroutine(SceneChange("Opening"));
                 break;
             case SceneState.B2F:
